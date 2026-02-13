@@ -1,0 +1,18 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, defining all routes (POS, Products, Transactions, Reports, Settings, Receipt) and wrapping them in the AppShell layout.",
+  "frontend/src/components/AppShell.tsx": "Application shell with sidebar navigation, TOKO FADLI branding, and footer with attribution; all UI text translated to Indonesian (informal).",
+  "frontend/src/pages/POSPage.tsx": "Point of Sale screen with barcode scanner, product search, local cart management using Option B tier pricing for line totals and cart total, payment method selection with cash handling, and checkout flow.",
+  "frontend/src/pages/ProductsPage.tsx": "Products and inventory management screen with searchable product table including photo thumbnails, stock status badges, add/edit product functionality, and delete product action with confirmation dialog; all UI text in Indonesian.",
+  "frontend/src/pages/TransactionsPage.tsx": "Transaction history screen with date range filtering, transaction list sorted by most recent, and navigation to individual receipt views; all UI text in Indonesian.",
+  "frontend/src/pages/ReportsPage.tsx": "Sales reports screen with summary cards (total sales, transactions, average) and tabbed period views (daily/weekly/monthly) showing grouped sales data; all UI text in Indonesian.",
+  "frontend/src/pages/AboutSettingsPage.tsx": "Settings and about screen for configuring store name and receipt footer text, with save functionality and app information; all UI text in Indonesian including feature list.",
+  "frontend/src/pages/ReceiptPage.tsx": "Receipt detail page that displays a printable receipt for a specific transaction with back navigation and print button; all UI text in Indonesian.",
+  "frontend/src/components/products/ProductFormDialog.tsx": "Product create/edit dialog with photo upload, basic product fields, and dynamic tier/package pricing editor with client-side validation for duplicate quantities, non-positive quantities, and negative prices.",
+  "frontend/src/components/receipt/ReceiptLayout.tsx": "Receipt layout component optimized for printing with store name, transaction details, itemized list, totals, and optional footer text; displays cash received and change for cash payments; all text in Indonesian.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including products (with tiers array in create/update mutation), cart, transactions, and settings with proper cache invalidation strategies.",
+  "frontend/src/utils/reportGrouping.ts": "Utility functions for grouping transactions by time period (daily/weekly/monthly) and calculating totals for reports.",
+  "frontend/src/lib/utils.ts": "Utility function for merging Tailwind CSS classes using clsx and tailwind-merge.",
+  "frontend/src/index.css": "Global styles with warm retail-themed OKLCH color system (orange/brown tones), print-optimized CSS for receipt printing, and base typography.",
+  "frontend/tailwind.config.js": "Tailwind configuration with extended warm retail color palette, custom fonts (Inter, JetBrains Mono), and animation utilities.",
+  "frontend/src/lib/pricing.ts": "Utility library for tier/package pricing validation, normalization, and Option B line total calculation; includes formatRupiah helper for Indonesian currency formatting."
+}

@@ -1,0 +1,52 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T08:34:09.405Z",
+  "summary": "Backend and frontend were extended to include product tiers and added pricing utilities, a migration, and UI/editor hooks. However, required backend tier validation (unique qty, qty>0, price>=0) is not evidenced, and the backend Option-B pricing propagation into cart/transactions/receipt cannot be confirmed due to truncation. Some unrelated frontend changes appear (Transactions page behavior/filters, currency formatting helper).",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Backend validates that tier quantities are > 0, tier prices are >= 0, and tier quantities are unique per product.",
+      "reason": "The backend function shown (`validateAndSortTiers`) only sorts tiers; no checks for quantity > 0, price >= 0, or uniqueness are present in the diff excerpt.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "When addToCart is called, lineTotal is computed as tier.totalPrice if quantity matches an existing tier.qty; otherwise lineTotal is computed as product.price * quantity; Cart.totalAmount sums lineTotals; Checkout/receipt/Transaction items reflect calculated unitPrice/lineTotal.",
+      "reason": "Although helper `findMatchingTier` exists, the `addToCart` implementation and any checkout/transaction persistence logic are truncated, so the required calculations and propagation to stored transactions/receipts are not confirmable from the provided diff summary.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Added Indonesian Rupiah formatting helper and currency formatting utilities.",
+      "reason": "Not requested by any requirement; pricing utilities requested were about tier validation/normalization and Option B calculation, not formatting.",
+      "evidence": [
+        "frontend/src/lib/pricing.ts"
+      ]
+    },
+    {
+      "description": "Transactions page enhancements: date range filtering and automatic navigation to latest receipt based on query param.",
+      "reason": "Not part of tier pricing requirements and may be considered unrelated reporting/transaction flow changes beyond what is necessary for tier pricing.",
+      "evidence": [
+        "frontend/src/pages/TransactionsPage.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.67,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/components/products/ProductFormDialog.tsx",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/pricing.ts",
+    "frontend/src/pages/POSPage.tsx",
+    "frontend/src/pages/TransactionsPage.tsx",
+    "project_state.json"
+  ]
+}

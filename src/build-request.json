@@ -1,0 +1,111 @@
+{
+  "kind": "build_request",
+  "title": "Implement per-product tier/package pricing with option-B quantity calculation",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Extend the backend Product model to support per-product tier/package pricing, where each product can optionally define multiple quantity-to-total-price tiers.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "gas bangun fiturnya"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A product can store 0..N price tiers, each tier containing a quantity and a total price.",
+        "Existing products without tiers remain valid and continue using the base unit price.",
+        "Tier data is returned by getProduct/getAllProducts and persisted across canister upgrades."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Update the backend product create/update API to accept and validate tier/package pricing data per product.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Format tier harga per produk... Jadi tiap produk bisa punya beberapa paket harga. Setuju?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "addOrUpdateProduct accepts the tier list along with existing fields.",
+        "Backend validates that tier quantities are > 0, tier prices are >= 0, and tier quantities are unique per product.",
+        "Tier list is stored in a stable, deterministic order (e.g., sorted by quantity ascending) so the same input yields consistent output."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement cart line pricing using the user-selected rule (Option B): if the purchased quantity exactly matches a tier quantity, charge the tier total price; otherwise charge normal unit price for the entire quantity (no package splitting/combining).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "2. yangb bro"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When addToCart is called, lineTotal is computed as tier.totalPrice if quantity matches an existing tier.qty; otherwise lineTotal is computed as product.price * quantity.",
+        "Cart.totalAmount is the sum of all lineTotal values using the same rule.",
+        "Checkout, receipt, and stored Transaction items reflect the calculated unitPrice/lineTotal so the printed receipt totals match POS totals."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a tier/package pricing editor to the product create/edit dialog so users can add, remove, and edit multiple tiers (quantity + total price) per product.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "jadi tiap produk bisa punya beberapa paket harga"
+        ]
+      },
+      "acceptanceCriteria": [
+        "ProductFormDialog includes a section to manage a list of tiers with inputs for quantity and total price.",
+        "Client-side validation prevents duplicate quantities, non-positive quantities, and negative prices, and shows a clear error state in the dialog when invalid.",
+        "Saving a product persists tiers and re-opening the edit dialog shows the saved tiers."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Update the POS page cart calculations and line item displays to use tier/package pricing with Option B so the on-screen totals match backend totals.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Kalau qty pembelian nggak pas kena paket... yangb bro"
+        ]
+      },
+      "acceptanceCriteria": [
+        "POS cart total uses tier total price only when an item quantity exactly matches a tier quantity; otherwise uses base unit price * quantity.",
+        "Each cart line shows the correct line total under the same rule.",
+        "Checkout continues to succeed and resulting receipt/transactions reflect the same totals as displayed in the POS page."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo.",
+    "Only create backend/migration.mo if required to preserve existing canister state after changing stable data structures.",
+    "Do not modify files under frontend/src/components/ui or any other immutable paths listed in SYSTEM_CONTEXT."
+  ],
+  "nonGoals": [
+    "Do not implement Option A (package-combination / greedy splitting) pricing logic.",
+    "Do not add external databases or third-party services.",
+    "Do not change unrelated checkout flows, authentication, or reporting logic beyond what is necessary to reflect correct tier pricing totals."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

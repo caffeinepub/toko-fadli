@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Project includes building a per-product tiered/package pricing feature with rules for handling quantities that don't match a tier.",
+  "architectural_notes": [
+    "Tier/package pricing is configured per product (tiers are flexible; not fixed to example values).",
+    "Non-matching purchase quantities use pricing option B: all units are charged normal price except units that exactly match a defined tier."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-add-a-tier-package-pricing-editor-to-the-product-create-edit-dialog-so-users-can-add-remove-and-edit-multiple-tiers-quantity-total-price-per-product",
+      "title": "Add a tier/package pricing editor to the product create/edit dialog so users can add, remove, and edit multiple tiers (quantity + total price) per product.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-pos-page-cart-calculations-and-line-item-displays-to-use-tier-package-pricing-with-option-b-so-the-on-screen-totals-match-backend-totals",
+      "title": "Update the POS page cart calculations and line item displays to use tier/package pricing with Option B so the on-screen totals match backend totals.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add per-product tier/package pricing (multiple quantity-price tiers per product) with calculation rule: for non-matching quantities, charge normal price except quantities that exactly match a tier (option B).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Extend the backend Product model to support per-product tier/package pricing, where each product can optionally define multiple quantity-to-total-price tiers.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Update the backend product create/update API to accept and validate tier/package pricing data per product.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement cart line pricing using the user-selected rule (Option B): if the purchased quantity exactly matches a tier quantity, charge the tier total price; otherwise charge normal unit price for the entire quantity (no package splitting/combining).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Implement per-product tier/package pricing with option-B quantity calculation",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

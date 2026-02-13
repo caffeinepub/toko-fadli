@@ -1,0 +1,54 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Per-product tier/package pricing editor + POS Option-B totals (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-4",
+      "summary": "Add tier/package pricing editor to the product create/edit dialog with client-side validation and persistence.",
+      "acceptanceCriteria": [
+        "ProductFormDialog includes a section to manage a list of tiers with inputs for quantity and total price.",
+        "Client-side validation prevents duplicate quantities, non-positive quantities, and negative prices, and shows a clear error state in the dialog when invalid.",
+        "Saving a product persists tiers and re-opening the edit dialog shows the saved tiers."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/products/ProductFormDialog.tsx",
+          "operation": "modify",
+          "description": "Extend the dialog UI to edit Product.tiers as a list (add/remove/edit quantity + total price), initialize the list from the provided product on open, and include client-side validation/error messaging for duplicate quantities, non-positive quantities, and negative prices. Ensure the submit payload includes the tiers array and that the dialog rehydrates saved tiers when re-opened. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Update the create/update product mutation typing and call-site to include the tiers array in the addOrUpdateProduct call, and ensure products queries refresh after save so the edited tiers appear when re-opening the dialog."
+        },
+        {
+          "path": "frontend/src/lib/pricing.ts",
+          "operation": "create",
+          "description": "Add shared frontend pricing helpers for tier/package pricing (Option B), including validation utilities for tiers (duplicate/non-positive/negative checks) and a deterministic normalization/sort helper for tiers to keep UI and payload consistent."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Update POS cart line totals and overall total to match Option-B tier/package pricing and align display with backend totals.",
+      "acceptanceCriteria": [
+        "POS cart total uses tier total price only when an item quantity exactly matches a tier quantity; otherwise uses base unit price * quantity.",
+        "Each cart line shows the correct line total under the same rule.",
+        "Checkout continues to succeed and resulting receipt/transactions reflect the same totals as displayed in the POS page."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/POSPage.tsx",
+          "operation": "modify",
+          "description": "Update local cart total and per-line total calculations to use Option B tier/package pricing: if quantity exactly matches a tier quantity, use tier.totalPrice; otherwise use product.price * quantity. Update the cart line item display to show the computed line total under the same rule, and ensure the cash/change validation uses the updated cartTotal. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/lib/pricing.ts",
+          "operation": "modify",
+          "description": "Add/extend a reusable function to compute Option B line totals from a Product (including tiers) and a quantity, and use it from POSPage to ensure consistent calculations across the app."
+        }
+      ]
+    }
+  ]
+}

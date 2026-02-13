@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --background: 0.98 0.005 40;
+        --foreground: 0.20 0.01 40;
+        --card: 1 0 0;
+        --card-foreground: 0.20 0.01 40;
+        --popover: 1 0 0;
+        --popover-foreground: 0.20 0.01 40;
+        --primary: 0.65 0.18 30;
+        --primary-foreground: 1 0 0;
+        --secondary: 0.95 0.01 40;
+        --secondary-foreground: 0.20 0.01 40;
+        --muted: 0.96 0.005 40;
+        --muted-foreground: 0.50 0.01 40;
+        --accent: 0.70 0.15 40;
+        --accent-foreground: 1 0 0;
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 1 0 0;
+        --border: 0.90 0.005 40;
+        --input: 0.90 0.005 40;
+        --ring: 0.65 0.18 30;
+        --chart-1: 0.70 0.15 40;
+        --chart-2: 0.65 0.18 30;
+        --chart-3: 0.60 0.12 50;
+        --chart-4: 0.75 0.10 60;
+        --chart-5: 0.55 0.20 20;
+        --sidebar: 1 0 0;
+        --sidebar-foreground: 0.20 0.01 40;
+        --sidebar-primary: 0.65 0.18 30;
+        --sidebar-primary-foreground: 1 0 0;
+        --sidebar-accent: 0.96 0.005 40;
+        --sidebar-accent-foreground: 0.20 0.01 40;
+        --sidebar-border: 0.90 0.005 40;
+        --sidebar-ring: 0.65 0.18 30;
+    }
+
+    .dark {
+        --background: 0.15 0.01 40;
+        --foreground: 0.95 0.005 40;
+        --card: 0.20 0.015 40;
+        --card-foreground: 0.95 0.005 40;
+        --popover: 0.18 0.015 40;
+        --popover-foreground: 0.95 0.005 40;
+        --primary: 0.70 0.15 40;
+        --primary-foreground: 0.15 0.01 40;
+        --secondary: 0.25 0.015 40;
+        --secondary-foreground: 0.95 0.005 40;
+        --muted: 0.25 0.015 40;
+        --muted-foreground: 0.60 0.01 40;
+        --accent: 0.30 0.02 40;
+        --accent-foreground: 0.95 0.005 40;
+        --destructive: 0.50 0.20 25;
+        --destructive-foreground: 0.95 0.005 40;
+        --border: 0.30 0.015 40;
+        --input: 0.30 0.015 40;
+        --ring: 0.65 0.18 30;
+        --chart-1: 0.70 0.15 40;
+        --chart-2: 0.65 0.18 30;
+        --chart-3: 0.60 0.12 50;
+        --chart-4: 0.75 0.10 60;
+        --chart-5: 0.55 0.20 20;
+        --sidebar: 0.18 0.015 40;
+        --sidebar-foreground: 0.95 0.005 40;
+        --sidebar-primary: 0.70 0.15 40;
+        --sidebar-primary-foreground: 0.15 0.01 40;
+        --sidebar-accent: 0.25 0.015 40;
+        --sidebar-accent-foreground: 0.95 0.005 40;
+        --sidebar-border: 0.30 0.015 40;
+        --sidebar-ring: 0.65 0.18 30;
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Print Styles */
+@media print {
+    @page {
+        size: 80mm auto;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Hide everything except receipt content */
+    body > div:not(.receipt-content),
+    header,
+    nav,
+    aside,
+    footer,
+    .print\\:hidden {
+        display: none !important;
+    }
+
+    /* Show only receipt */
+    .receipt-content {
+        display: block !important;
+        width: 80mm;
+        margin: 0;
+        padding: 10mm;
+        box-shadow: none;
+        border: none;
+    }
+
+    /* Optimize text for thermal printers */
+    .receipt-content * {
+        color: #000 !important;
+        background: #fff !important;
+    }
+}

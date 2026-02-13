@@ -1,0 +1,85 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T08:34:09.407Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 5,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Extend the backend Product model to support per-product tier/package pricing, where each product can optionally define multiple quantity-to-total-price tiers.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Update the backend product create/update API to accept and validate tier/package pricing data per product.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement cart line pricing using the user-selected rule (Option B): if the purchased quantity exactly matches a tier quantity, charge the tier total price; otherwise charge normal unit price for the entire quantity (no package splitting/combining).",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Add a tier/package pricing editor to the product create/edit dialog so users can add, remove, and edit multiple tiers (quantity + total price) per product.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/products/ProductFormDialog.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/lib/pricing.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/products/ProductFormDialog.tsx",
+          "frontend/src/hooks/useQueries.ts",
+          "frontend/src/lib/pricing.ts"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Update the POS page cart calculations and line item displays to use tier/package pricing with Option B so the on-screen totals match backend totals.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/POSPage.tsx",
+          "frontend/src/lib/pricing.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/POSPage.tsx",
+          "frontend/src/lib/pricing.ts"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/products/ProductFormDialog.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/lib/pricing.ts",
+    "frontend/src/pages/POSPage.tsx",
+    "frontend/src/pages/TransactionsPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
